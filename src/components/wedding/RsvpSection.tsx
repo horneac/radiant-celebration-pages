@@ -1,0 +1,204 @@
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+
+const RsvpSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    guests: "1",
+    attending: "yes",
+    dietary: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.email.trim()) {
+      toast.error("Please fill in your name and email.");
+      return;
+    }
+    setSubmitted(true);
+    toast.success("Thank you for your RSVP!");
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  if (submitted) {
+    return (
+      <section id="rsvp" className="py-24 md:py-32 px-6 bg-card">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-xl mx-auto text-center"
+        >
+          <p className="text-accent text-5xl mb-6">♥</p>
+          <h2 className="font-display text-4xl md:text-5xl font-light mb-4">
+            Thank You!
+          </h2>
+          <p className="font-body text-lg text-muted-foreground">
+            We've received your RSVP and can't wait to celebrate with you.
+          </p>
+        </motion.div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="rsvp" ref={ref} className="py-24 md:py-32 px-6 bg-card">
+      <div className="max-w-xl mx-auto">
+        <div className="text-center mb-12">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="font-body text-lg tracking-[0.3em] uppercase text-muted-foreground mb-4"
+          >
+            Be Our Guest
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-display text-4xl md:text-5xl font-light"
+          >
+            RSVP
+          </motion.h2>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="section-divider"
+          />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="font-body text-muted-foreground mt-4"
+          >
+            Kindly respond by August 1, 2026
+          </motion.p>
+        </div>
+
+        <motion.form
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+                Full Name *
+              </label>
+              <Input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your full name"
+                className="bg-background border-border font-body text-base focus-visible:ring-accent"
+                required
+              />
+            </div>
+            <div>
+              <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+                Email *
+              </label>
+              <Input
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your@email.com"
+                className="bg-background border-border font-body text-base focus-visible:ring-accent"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+                Will you attend?
+              </label>
+              <select
+                name="attending"
+                value={formData.attending}
+                onChange={handleChange}
+                className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <option value="yes">Joyfully Accepts</option>
+                <option value="no">Regretfully Declines</option>
+              </select>
+            </div>
+            <div>
+              <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+                Number of Guests
+              </label>
+              <select
+                name="guests"
+                value={formData.guests}
+                onChange={handleChange}
+                className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+              Dietary Requirements
+            </label>
+            <Input
+              name="dietary"
+              value={formData.dietary}
+              onChange={handleChange}
+              placeholder="Any allergies or dietary needs"
+              className="bg-background border-border font-body text-base focus-visible:ring-accent"
+            />
+          </div>
+
+          <div>
+            <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+              A Note to the Couple
+            </label>
+            <Textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Share your well-wishes..."
+              className="bg-background border-border font-body text-base focus-visible:ring-accent min-h-[120px]"
+            />
+          </div>
+
+          <div className="text-center pt-4">
+            <Button
+              type="submit"
+              className="bg-accent text-accent-foreground hover:bg-gold-dark font-body text-base tracking-[0.2em] uppercase px-12 py-6 transition-all duration-500"
+            >
+              Send RSVP
+            </Button>
+          </div>
+        </motion.form>
+      </div>
+    </section>
+  );
+};
+
+export default RsvpSection;
