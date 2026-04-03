@@ -1,14 +1,16 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { saveRsvp, getGuestByToken } from "@/lib/rsvp-storage";
 
 const RsvpSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [submitted, setSubmitted] = useState(false);
+  const [guestToken, setGuestToken] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,12 +21,25 @@ const RsvpSection = () => {
     message: "",
   });
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+      setGuestToken(token);
+      const guest = getGuestByToken(token);
+      if (guest) {
+        setFormData((prev) => ({ ...prev, name: guest.name, email: guest.email }));
+      }
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) {
       toast.error("Please fill in your name and email.");
       return;
     }
+    saveRsvp({ ...formData, guestToken });
     setSubmitted(true);
     toast.success("Thank you for your RSVP!");
   };
