@@ -24,7 +24,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-muted-foreground font-body text-lg md:text-xl tracking-[0.3em] uppercase mb-6"
         >
-          We're getting married
+          Ne căsătorim!
         </motion.p>
 
         <motion.h1
@@ -33,7 +33,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.5 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-light tracking-wide mb-4"
         >
-          Emma <span className="text-accent font-light italic">&</span> James
+          Simona <span className="text-accent font-light italic">&</span> Emanuel
         </motion.h1>
 
         <motion.div
@@ -49,7 +49,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 1.3 }}
           className="font-body text-xl md:text-2xl text-muted-foreground tracking-wider"
         >
-          September 15, 2026
+          4 Iulie, 2026
         </motion.p>
 
         <motion.p
@@ -58,7 +58,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 1.6 }}
           className="font-body text-lg text-muted-foreground mt-2 tracking-wide"
         >
-          The Grand Estate · Tuscany, Italy
+          Restaurant Dallas, Negrești-Oaș
         </motion.p>
 
         <motion.div
@@ -71,7 +71,7 @@ const HeroSection = () => {
             href="#rsvp"
             className="inline-block border border-accent text-accent-foreground px-10 py-3 font-body text-lg tracking-[0.2em] uppercase hover:bg-accent hover:text-accent-foreground transition-all duration-500"
           >
-            RSVP
+            Confirmare prezență
           </a>
         </motion.div>
       </div>

@@ -5,27 +5,19 @@ import { MapPin, Clock, Heart } from "lucide-react";
 const events = [
   {
     icon: Heart,
-    title: "The Ceremony",
-    time: "3:00 PM",
-    location: "The Garden Chapel",
-    address: "The Grand Estate, Tuscany",
-    description: "Join us as we exchange vows surrounded by olive groves and rolling hills.",
-  },
-  {
-    icon: Clock,
-    title: "Cocktail Hour",
-    time: "4:30 PM",
-    location: "The Terrace",
-    address: "The Grand Estate, Tuscany",
-    description: "Enjoy drinks and hors d'oeuvres with a breathtaking view of the valley.",
+    title: "Ceremonia religioasă",
+    time: "13:00",
+    location: "Catedrala Ortodoxă „Duminica Tuturor Sfinților”",
+    address: "Strada Victoriei 210, Negrești-Oaș",
+    addressLink: "https://maps.app.goo.gl/9jar7gn9mre7Tkrk9"
   },
   {
     icon: MapPin,
-    title: "The Reception",
-    time: "6:00 PM",
-    location: "The Grand Ballroom",
-    address: "The Grand Estate, Tuscany",
-    description: "Dinner, dancing, and celebrations under a canopy of twinkling lights.",
+    title: "Petrecerea de nuntă",
+    time: "15:30",
+    location: "Restaurant Dallas",
+    address: "Strada Ion Creangă 146, Negrești-Oaș",
+    addressLink: "https://maps.app.goo.gl/Mc3FsCF26ak1zCBbA"
   },
 ];
 
@@ -43,7 +35,7 @@ const DetailsSection = () => {
             transition={{ duration: 0.6 }}
             className="font-body text-lg tracking-[0.3em] uppercase text-muted-foreground mb-4"
           >
-            Wedding Day
+            Ziua nunții
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -51,7 +43,7 @@ const DetailsSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-display text-4xl md:text-5xl font-light"
           >
-            The Details
+            Agenda zilei
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -61,7 +53,7 @@ const DetailsSection = () => {
           />
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           {events.map((event, index) => (
             <motion.div
               key={event.title}
@@ -76,9 +68,13 @@ const DetailsSection = () => {
               <h3 className="font-display text-2xl mb-2">{event.title}</h3>
               <p className="font-body text-xl text-accent font-medium mb-4">{event.time}</p>
               <p className="font-body text-lg font-medium">{event.location}</p>
-              <p className="font-body text-muted-foreground text-sm mb-4">{event.address}</p>
-              <p className="font-body text-muted-foreground leading-relaxed">
-                {event.description}
+              <p className="font-body text-muted-foreground text-sm mb-4">
+                  {event.address}
+              </p>
+              <p>
+                <a href={event.addressLink} target="_blank" rel="noopener noreferrer" className="text-accent underline">
+                  Vezi pe hartă
+                </a>
               </p>
             </motion.div>
           ))}

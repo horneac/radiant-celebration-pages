@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <main className="bg-background text-foreground overflow-x-hidden">
       <HeroSection />
-      <OurStorySection />
+      {/* <OurStorySection /> */}
       <CountdownSection />
       <DetailsSection />
       <RsvpSection />

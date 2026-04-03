@@ -13,10 +13,10 @@ const FooterSection = () => {
         transition={{ duration: 1 }}
       >
         <p className="font-display text-3xl md:text-4xl font-light italic mb-4">
-          Emma <span className="text-accent">&</span> James
+          Simona <span className="text-accent">&</span> Emanuel
         </p>
         <p className="font-body text-muted-foreground tracking-[0.2em] uppercase text-sm">
-          September 15, 2026 · Tuscany, Italy
+          4 Iulie, 2026, Negrești-Oaș
         </p>
         <div className="section-divider mt-8" />
         <p className="font-body text-sm text-muted-foreground mt-6">

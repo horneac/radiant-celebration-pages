@@ -13,6 +13,7 @@ const RsvpSection = () => {
     name: "",
     email: "",
     guests: "1",
+    childGuests: "0",
     attending: "yes",
     dietary: "",
     message: "",
@@ -45,10 +46,10 @@ const RsvpSection = () => {
         >
           <p className="text-accent text-5xl mb-6">♥</p>
           <h2 className="font-display text-4xl md:text-5xl font-light mb-4">
-            Thank You!
+            Mulțumim!
           </h2>
           <p className="font-body text-lg text-muted-foreground">
-            We've received your RSVP and can't wait to celebrate with you.
+            Am primit RSVP-ul tău și abia așteptăm să sărbătorim împreună.
           </p>
         </motion.div>
       </section>
@@ -65,7 +66,7 @@ const RsvpSection = () => {
             transition={{ duration: 0.6 }}
             className="font-body text-lg tracking-[0.3em] uppercase text-muted-foreground mb-4"
           >
-            Be Our Guest
+            Va așteptăm cu drag!
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -73,7 +74,7 @@ const RsvpSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-display text-4xl md:text-5xl font-light"
           >
-            RSVP
+            Confirmare prezență
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -87,7 +88,7 @@ const RsvpSection = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="font-body text-muted-foreground mt-4"
           >
-            Kindly respond by August 1, 2026
+            Vă rugăm să răspundeți până la data de 19 Iunie 2026
           </motion.p>
         </div>
 
@@ -101,7 +102,7 @@ const RsvpSection = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
-                Full Name *
+                Nume complet *
               </label>
               <Input
                 name="name"
@@ -128,10 +129,10 @@ const RsvpSection = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid gap-6">
             <div>
               <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
-                Will you attend?
+                Veți participa?
               </label>
               <select
                 name="attending"
@@ -143,9 +144,11 @@ const RsvpSection = () => {
                 <option value="no">Regretfully Declines</option>
               </select>
             </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
-                Number of Guests
+                Număr de invitați
               </label>
               <select
                 name="guests"
@@ -159,11 +162,28 @@ const RsvpSection = () => {
                 <option value="4">4</option>
               </select>
             </div>
+            <div>
+              <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+                Copii
+              </label>
+              <select
+                name="childGuests"
+                value={formData.childGuests}
+                onChange={handleChange}
+                className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
           </div>
 
           <div>
             <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
-              Dietary Requirements
+              Cerințe alimentare
             </label>
             <Input
               name="dietary"
@@ -176,13 +196,13 @@ const RsvpSection = () => {
 
           <div>
             <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
-              A Note to the Couple
+              Un mesaj pentru miri
             </label>
             <Textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Share your well-wishes..."
+              placeholder="Scrieți urările dvs..."
               className="bg-background border-border font-body text-base focus-visible:ring-accent min-h-[120px]"
             />
           </div>
@@ -192,7 +212,7 @@ const RsvpSection = () => {
               type="submit"
               className="bg-accent text-accent-foreground hover:bg-gold-dark font-body text-base tracking-[0.2em] uppercase px-12 py-6 transition-all duration-500"
             >
-              Send RSVP
+              Trimite Confirmare prezență
             </Button>
           </div>
         </motion.form>

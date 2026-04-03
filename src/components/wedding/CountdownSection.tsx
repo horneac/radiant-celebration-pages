@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
-const weddingDate = new Date("2026-09-15T15:00:00");
+const weddingDate = new Date("2026-07-04T13:00:00");
 
 const CountdownSection = () => {
   const ref = useRef(null);
