@@ -41,7 +41,7 @@ const RsvpSection = () => {
     }
     saveRsvp({ ...formData, guestToken });
     setSubmitted(true);
-    toast.success("Thank you for your RSVP!");
+    toast.success("Multumim pentru confirmare! Abia așteptăm să sărbătorim împreună.");
   };
 
   const handleChange = (
@@ -225,7 +225,7 @@ const RsvpSection = () => {
           <div className="text-center pt-4">
             <Button
               type="submit"
-              className="bg-accent text-accent-foreground hover:bg-gold-dark font-body text-base tracking-[0.2em] uppercase px-12 py-6 transition-all duration-500"
+              className="text-wrap bg-accent text-accent-foreground hover:bg-gold-dark font-body text-base tracking-[0.2em] uppercase px-12 py-6 transition-all duration-500"
             >
               Trimite Confirmare prezență
             </Button>
