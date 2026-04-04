@@ -4,14 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { saveRsvp, getGuestByToken } from "@/lib/rsvp-storage";
+import { saveRsvp, getGuestByToken, RsvpResponse, RsvpData } from "@/lib/rsvp-storage";
 
 const RsvpSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [submitted, setSubmitted] = useState(false);
   const [guestToken, setGuestToken] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RsvpData>({
     name: "",
     email: "",
     guests: "1",
@@ -39,7 +39,7 @@ const RsvpSection = () => {
       toast.error("Please fill in your name and email.");
       return;
     }
-    saveRsvp({ ...formData, guestToken });
+    saveRsvp({ ...formData });
     setSubmitted(true);
     toast.success("Multumim pentru confirmare! Abia așteptăm să sărbătorim împreună.");
   };

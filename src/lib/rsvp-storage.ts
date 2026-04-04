@@ -1,4 +1,6 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 
+import { supabase } from "../utils/supabase";
 
 export interface Guest {
   id: string;
@@ -19,6 +21,16 @@ export interface RsvpResponse {
   dietary: string;
   message: string;
   submittedAt: string;
+}
+
+export interface RsvpData {
+  name: string;
+  email: string;
+  attending: string;
+  guests: string;
+  childGuests: string;
+  dietary: string;
+  message: string;
 }
 
 const GUESTS_KEY = "wedding_guests";
@@ -62,16 +74,13 @@ export function getRsvps(): RsvpResponse[] {
   return data ? JSON.parse(data) : [];
 }
 
-export function saveRsvp(rsvp: Omit<RsvpResponse, "id" | "submittedAt">): RsvpResponse {
-  const rsvps = getRsvps();
-  const entry: RsvpResponse = {
-    ...rsvp,
-    id: generateId(),
-    submittedAt: new Date().toISOString(),
-  };
-  rsvps.push(entry);
-  localStorage.setItem(RSVPS_KEY, JSON.stringify(rsvps));
-  return entry;
+export function saveRsvp(rsvp: RsvpData): void {
+  supabase.from("rsvps").insert(rsvp).then(({ data, error }) => {
+    if (error) {
+      console.error("Error saving RSVP response:", error);
+    }
+    console.log("RSVP response saved:", data);
+  });
 }
 
 export function getInviteLink(token: string): string {
