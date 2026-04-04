@@ -123,7 +123,7 @@ const RsvpSection = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Your full name"
+                placeholder="Numele complet"
                 className="bg-background border-border font-body text-base focus-visible:ring-accent"
                 required
               />
@@ -137,7 +137,7 @@ const RsvpSection = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="your@email.com"
+                placeholder="adresa.de@email.com"
                 className="bg-background border-border font-body text-base focus-visible:ring-accent"
                 required
               />
@@ -155,8 +155,8 @@ const RsvpSection = () => {
                 onChange={handleChange}
                 className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
               >
-                <option value="yes">Joyfully Accepts</option>
-                <option value="no">Regretfully Declines</option>
+                <option value="yes">Accept</option>
+                <option value="no">Refuz</option>
               </select>
             </div>
           </div>
@@ -204,7 +204,7 @@ const RsvpSection = () => {
               name="dietary"
               value={formData.dietary}
               onChange={handleChange}
-              placeholder="Any allergies or dietary needs"
+              placeholder="Preferințe alimentare sau alergii (dacă este cazul)"
               className="bg-background border-border font-body text-base focus-visible:ring-accent"
             />
           </div>
