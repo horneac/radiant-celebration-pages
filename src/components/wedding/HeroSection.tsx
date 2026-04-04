@@ -81,7 +81,7 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float"
+        className="absolute bottom-8 -translate-x-1/2 animate-float"
       >
         <div className="w-px h-12 bg-accent/50 mx-auto mb-2" />
         <p className="font-body text-xs tracking-[0.3em] uppercase text-muted-foreground">Scroll</p>
