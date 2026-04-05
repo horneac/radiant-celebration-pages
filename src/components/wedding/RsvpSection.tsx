@@ -14,10 +14,10 @@ const RsvpSection = () => {
   const [formData, setFormData] = useState<RsvpData>({
     name: "",
     email: "",
-    guests: "1",
-    childGuests: "0",
+    guests_count: "1",
+    child_guest_count: "0",
     attending: "yes",
-    dietary: "",
+    dietary_needs: "",
     message: "",
   });
 
@@ -39,9 +39,21 @@ const RsvpSection = () => {
       toast.error("Please fill in your name and email.");
       return;
     }
-    saveRsvp({ ...formData });
-    setSubmitted(true);
-    toast.success("Multumim pentru confirmare! Abia așteptăm să sărbătorim împreună.");
+    saveRsvp({ ...formData })
+      .then((data) => {
+        if (data.error) {
+          toast.error("A apărut o eroare la salvarea confirmării. Vă rugăm să încercați din nou.");
+          console.error("Error saving RSVP:", data.error);
+        } else {
+          setSubmitted(true);
+          toast.success("Multumim pentru confirmare! Abia așteptăm să sărbătorim împreună.");
+          console.log("RSVP saved:", data);
+        }
+      })
+      .catch((error) => {
+        toast.error("A apărut o eroare la salvarea confirmării. Vă rugăm să încercați din nou.");
+        console.error("Error saving RSVP:", error);
+      });
   };
 
   const handleChange = (
@@ -64,7 +76,7 @@ const RsvpSection = () => {
             Mulțumim!
           </h2>
           <p className="font-body text-lg text-muted-foreground">
-            Am primit RSVP-ul tău și abia așteptăm să sărbătorim împreună.
+            Am primit confirmarea ta și abia așteptăm să sărbătorim împreună.
           </p>
         </motion.div>
       </section>
@@ -166,8 +178,8 @@ const RsvpSection = () => {
                 Număr de invitați
               </label>
               <select
-                name="guests"
-                value={formData.guests}
+                name="guests_count"
+                value={formData.guests_count}
                 onChange={handleChange}
                 className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
               >
@@ -182,8 +194,8 @@ const RsvpSection = () => {
                 Copii
               </label>
               <select
-                name="childGuests"
-                value={formData.childGuests}
+                name="child_guest_count"
+                value={formData.child_guest_count}
                 onChange={handleChange}
                 className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
               >
@@ -201,8 +213,8 @@ const RsvpSection = () => {
               Cerințe alimentare
             </label>
             <Input
-              name="dietary"
-              value={formData.dietary}
+              name="dietary_needs"
+              value={formData.dietary_needs}
               onChange={handleChange}
               placeholder="Preferințe alimentare sau alergii (dacă este cazul)"
               className="bg-background border-border font-body text-base focus-visible:ring-accent"

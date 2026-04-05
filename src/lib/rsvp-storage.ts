@@ -1,4 +1,4 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+import { PostgrestSingleResponse, SupabaseClient } from "@supabase/supabase-js";
 
 import { supabase } from "../utils/supabase";
 
@@ -27,9 +27,9 @@ export interface RsvpData {
   name: string;
   email: string;
   attending: string;
-  guests: string;
-  childGuests: string;
-  dietary: string;
+  guests_count: string;
+  child_guest_count: string;
+  dietary_needs: string;
   message: string;
 }
 
@@ -74,13 +74,8 @@ export function getRsvps(): RsvpResponse[] {
   return data ? JSON.parse(data) : [];
 }
 
-export function saveRsvp(rsvp: RsvpData): void {
-  supabase.from("rsvps").insert(rsvp).then(({ data, error }) => {
-    if (error) {
-      console.error("Error saving RSVP response:", error);
-    }
-    console.log("RSVP response saved:", data);
-  });
+export async function saveRsvp(rsvp: RsvpData): Promise<PostgrestSingleResponse<any>> {
+  return await supabase.from("rsvps").insert(rsvp)
 }
 
 export function getInviteLink(token: string): string {
