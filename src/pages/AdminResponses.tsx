@@ -80,9 +80,9 @@ const AdminResponses = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
               {[
                 { label: "Total RSVPs", value: rsvps.length },
-                { label: "Attending", value: rsvps.filter((r) => r.attending === "yes").length },
-                { label: "Total Guests", value: rsvps.filter((r) => r.attending === "yes").reduce((sum, r) => sum + parseInt(r.guests || "0"), 0) },
-                { label: "Children", value: rsvps.filter((r) => r.attending === "yes").reduce((sum, r) => sum + parseInt(r.childGuests || "0"), 0) },
+                { label: "Attending", value: rsvps.filter((r) => r.attending === true).length },
+                { label: "Total Guests", value: rsvps.filter((r) => r.attending === true).reduce((sum, r) => sum + parseInt(r.guests || "0"), 0) },
+                { label: "Children", value: rsvps.filter((r) => r.attending === true).reduce((sum, r) => sum + parseInt(r.childGuests || "0"), 0) },
               ].map((stat) => (
                 <div key={stat.label} className="bg-card border border-border rounded-lg p-4 text-center">
                   <p className="font-display text-3xl">{stat.value}</p>
@@ -99,28 +99,34 @@ const AdminResponses = () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="font-body text-xs tracking-widest uppercase">Name</TableHead>
-                      <TableHead className="font-body text-xs tracking-widest uppercase">Email</TableHead>
+                      <TableHead className="font-body text-xs tracking-widest uppercase">Phone Number</TableHead>
                       <TableHead className="font-body text-xs tracking-widest uppercase">Status</TableHead>
                       <TableHead className="font-body text-xs tracking-widest uppercase">Guests</TableHead>
                       <TableHead className="font-body text-xs tracking-widest uppercase">Children</TableHead>
                       <TableHead className="font-body text-xs tracking-widest uppercase">Dietary</TableHead>
                       <TableHead className="font-body text-xs tracking-widest uppercase">Message</TableHead>
+                      <TableHead className="font-body text-xs tracking-widest uppercase">Accomodation</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {rsvps.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell className="font-body font-medium">{r.name}</TableCell>
-                        <TableCell className="font-body text-sm">{r.email}</TableCell>
+                        <TableCell className="font-body text-sm">{r.phoneNumber}</TableCell>
                         <TableCell>
-                          <Badge variant={r.attending === "yes" ? "default" : "secondary"} className={r.attending === "yes" ? "bg-accent text-accent-foreground" : ""}>
-                            {r.attending === "yes" ? "Attending" : "Declined"}
+                          <Badge variant={r.attending === true ? "default" : "secondary"} className={r.attending === true ? "bg-accent text-accent-foreground" : ""}>
+                            {r.attending === true ? "Attending" : "Declined"}
                           </Badge>
                         </TableCell>
                         <TableCell className="font-body text-center">{r.guests}</TableCell>
                         <TableCell className="font-body text-center">{r.childGuests}</TableCell>
                         <TableCell className="font-body text-sm">{r.dietary || "—"}</TableCell>
                         <TableCell className="font-body text-sm max-w-[200px] truncate">{r.message || "—"}</TableCell>
+                        <TableCell className="font-body text-sm">
+                          <Badge variant={r.needsAccomodation === true ? "default" : "secondary"} className={r.needsAccomodation === true ? "bg-accent text-accent-foreground" : ""}>
+                            {r.needsAccomodation === true ? "Yes" : "No"}
+                          </Badge>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

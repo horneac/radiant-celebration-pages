@@ -15,12 +15,14 @@ export interface RsvpResponse {
   guestToken: string | null;
   name: string;
   email: string;
-  attending: string;
+  attending: boolean;
   guests: string;
   childGuests: string;
   dietary: string;
   message: string;
   submittedAt: string;
+  phoneNumber: string;
+  needsAccomodation: boolean;
 }
 
 interface ApiRsvpResponse {
@@ -28,12 +30,14 @@ interface ApiRsvpResponse {
   guest_token: string | null;
   name: string;
   email: string;
-  attending: string;
+  attending: boolean;
   guests_count: string;
   child_guest_count: string;
   dietary_needs: string;
   message: string;
   submitted_at: string;
+  phone_number: string;
+  needs_accomodation: boolean;
 }
 
 export interface RsvpData {
@@ -110,6 +114,8 @@ export async function getRsvps(adminApiKey: string): Promise<RsvpResponse[]> {
     dietary: row.dietary_needs,
     message: row.message,
     submittedAt: row.submitted_at,
+    phoneNumber: row.phone_number,
+    needsAccomodation: row.needs_accomodation,
   }));
 }
 
