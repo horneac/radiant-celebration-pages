@@ -1,18 +1,23 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const adminApiKey = process.env.ADMIN_API_KEY;
-
-if (!supabaseUrl || !serviceRoleKey || !adminApiKey) {
-  throw new Error(
-    "Missing SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, or ADMIN_API_KEY environment variable"
-  );
-}
-
-const supabase = createClient(supabaseUrl, serviceRoleKey);
-
 export default async function handler(req: any, res: any) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const adminApiKey = process.env.ADMIN_API_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey || !adminApiKey) {
+    return res.status(500).json({
+      error: "Server misconfiguration: missing environment variables",
+      details: `Missing: ${[
+        !supabaseUrl && "SUPABASE_URL",
+        !serviceRoleKey && "SUPABASE_SERVICE_ROLE_KEY",
+        !adminApiKey && "ADMIN_API_KEY",
+      ]
+        .filter(Boolean)
+        .join(", ")}`,
+    });
+  }
+
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return res.status(405).json({ error: "Method Not Allowed" });
@@ -24,6 +29,7 @@ export default async function handler(req: any, res: any) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
+  const supabase = createClient(supabaseUrl, serviceRoleKey);
   const { data, error } = await supabase.from("rsvps").select("*");
 
   if (error) {
