@@ -31,6 +31,8 @@ export interface RsvpData {
   child_guest_count: string;
   dietary_needs: string;
   message: string;
+  phone_number: string;
+  needs_accomodation: string;
 }
 
 const GUESTS_KEY = "wedding_guests";

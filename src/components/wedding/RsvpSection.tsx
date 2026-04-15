@@ -19,6 +19,8 @@ const RsvpSection = () => {
     attending: "yes",
     dietary_needs: "",
     message: "",
+    phone_number: "",
+    needs_accomodation: "no",
   });
 
   useEffect(() => {
@@ -35,13 +37,17 @@ const RsvpSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim()) {
-      toast.error("Please fill in your name and email.");
+    if (!formData.name.trim() || !formData.phone_number.trim()) {
+      toast.error("Please fill in your name and phone number.");
       return;
     }
     saveRsvp({ ...formData })
       .then((data) => {
         if (data.error) {
+          if (data.error.code === "23505") {
+            toast.error("Se pare că ați trimis deja o confirmare pentru acest numar de telefon. Dacă doriți să actualizați informațiile, vă rugăm să ne contactați direct.");
+            return;
+          }
           toast.error("A apărut o eroare la salvarea confirmării. Vă rugăm să încercați din nou.");
           console.error("Error saving RSVP:", data.error);
         } else {
@@ -142,21 +148,21 @@ const RsvpSection = () => {
             </div>
             <div>
               <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
-                Email *
+                Număr de telefon *
               </label>
               <Input
-                name="email"
-                type="email"
-                value={formData.email}
+                name="phone_number"
+                type="tel"
+                value={formData.phone_number}
                 onChange={handleChange}
-                placeholder="adresa.de@email.com"
+                placeholder="Număr de telefon"
                 className="bg-background border-border font-body text-base focus-visible:ring-accent"
                 required
               />
             </div>
           </div>
 
-          <div className="grid gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
                 Veți participa?
@@ -167,8 +173,22 @@ const RsvpSection = () => {
                 onChange={handleChange}
                 className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
               >
-                <option value="yes">Accept</option>
-                <option value="no">Refuz</option>
+                <option value="yes">Da</option>
+                <option value="no">Nu</option>
+              </select>
+            </div>
+            <div>
+              <label className="font-body text-sm tracking-[0.15em] uppercase text-muted-foreground mb-2 block">
+                Aveti nevoie de cazare?
+              </label>
+              <select
+                name="needs_accomodation"
+                value={formData.needs_accomodation}
+                onChange={handleChange}
+                className="w-full h-10 rounded-md border border-border bg-background px-3 font-body text-base focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <option value="yes">Da</option>
+                <option value="no">Nu</option>
               </select>
             </div>
           </div>
