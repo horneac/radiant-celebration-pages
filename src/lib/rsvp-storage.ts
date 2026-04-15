@@ -1,4 +1,4 @@
-import { PostgrestSingleResponse, SupabaseClient } from "@supabase/supabase-js";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 import { supabase } from "../utils/supabase";
 
@@ -21,6 +21,19 @@ export interface RsvpResponse {
   dietary: string;
   message: string;
   submittedAt: string;
+}
+
+interface ApiRsvpResponse {
+  id: string;
+  guest_token: string | null;
+  name: string;
+  email: string;
+  attending: string;
+  guests_count: string;
+  child_guest_count: string;
+  dietary_needs: string;
+  message: string;
+  submitted_at: string;
 }
 
 export interface RsvpData {
@@ -71,9 +84,33 @@ export function getGuestByToken(token: string): Guest | undefined {
 }
 
 // RSVP management
-export function getRsvps(): RsvpResponse[] {
-  const data = localStorage.getItem(RSVPS_KEY);
-  return data ? JSON.parse(data) : [];
+export async function getRsvps(adminApiKey: string): Promise<RsvpResponse[]> {
+  const response = await fetch("/api/get-all-rsvps", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${adminApiKey}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => ({ error: "Failed to fetch RSVPs" }));
+    throw new Error(errorBody.error || `Failed to fetch RSVPs: ${response.status}`);
+  }
+
+  const rows = (await response.json()) as ApiRsvpResponse[];
+
+  return rows.map((row) => ({
+    id: row.id,
+    guestToken: row.guest_token,
+    name: row.name,
+    email: row.email,
+    attending: row.attending,
+    guests: row.guests_count,
+    childGuests: row.child_guest_count,
+    dietary: row.dietary_needs,
+    message: row.message,
+    submittedAt: row.submitted_at,
+  }));
 }
 
 export async function saveRsvp(rsvp: RsvpData): Promise<PostgrestSingleResponse<any>> {
